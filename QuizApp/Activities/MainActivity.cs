@@ -4,6 +4,7 @@ using Android.Support.V7.App;
 using Android.Runtime;
 using Android.Widget;
 using Android.Content;
+using Android.Views;
 
 namespace QuizApp
 {
@@ -11,6 +12,9 @@ namespace QuizApp
     public class MainActivity : AppCompatActivity
     {
         Android.Support.V7.Widget.Toolbar toolbar;
+        Android.Support.V4.Widget.DrawerLayout drawerLayout;
+        Android.Support.Design.Widget.NavigationView navigationView;
+
         LinearLayout historyLayout;
         LinearLayout geographyLayout;
         LinearLayout spaceLayout;
@@ -24,6 +28,9 @@ namespace QuizApp
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
             toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            drawerLayout = FindViewById<Android.Support.V4.Widget.DrawerLayout>(Resource.Id.drawerLayout);
+            navigationView = FindViewById<Android.Support.Design.Widget.NavigationView>(Resource.Id.navView);
+            navigationView.NavigationItemSelected += NavigationView_NavigationItemSelected;
 
             //Setup toolbar
             SetSupportActionBar(toolbar);
@@ -48,48 +55,127 @@ namespace QuizApp
             programmingLayout.Click += ProgrammingLayout_Click;
             businessLayout.Click += BusinessLayout_Click;
 
+            
+
+        }
+
+        private void NavigationView_NavigationItemSelected(object sender, Android.Support.Design.Widget.NavigationView.NavigationItemSelectedEventArgs e)
+        {
+            if(e.MenuItem.ItemId == Resource.Id.navHistory)
+            {
+                InitHistory();
+                drawerLayout.CloseDrawers();
+            }
+            else if (e.MenuItem.ItemId == Resource.Id.navGeography)
+            {
+                InitGeography();
+                drawerLayout.CloseDrawers();
+            }
+            else if (e.MenuItem.ItemId == Resource.Id.navSpace)
+            {
+                InitSpace();
+                drawerLayout.CloseDrawers();
+            }
+            else if (e.MenuItem.ItemId == Resource.Id.navEngineering)
+            {
+                InitEngineering();
+                drawerLayout.CloseDrawers();
+            }
+            else if (e.MenuItem.ItemId == Resource.Id.navProgramming)
+            {
+                InitProgramming();
+                drawerLayout.CloseDrawers();
+            }
+            else if (e.MenuItem.ItemId == Resource.Id.navBusiness)
+            {
+                InitBusiness();
+                drawerLayout.CloseDrawers();
+            }
+
         }
 
         private void BusinessLayout_Click(object sender, System.EventArgs e)
+        {
+            InitBusiness();
+        }
+
+        private void ProgrammingLayout_Click(object sender, System.EventArgs e)
+        {
+            InitProgramming();
+        }
+
+        private void EngineeringLayout_Click(object sender, System.EventArgs e)
+        {
+            InitEngineering();
+        }
+
+        private void SpaceLayout_Click(object sender, System.EventArgs e)
+        {
+            InitSpace();   
+        }
+
+        private void GeographyLayout_Click(object sender, System.EventArgs e)
+        {
+            InitGeography();
+        }
+
+        private void HistoryLayout_Click(object sender, System.EventArgs e)
+        {
+            InitHistory();
+        }
+
+        private void InitBusiness()
         {
             Intent intent = new Intent(this, typeof(QuizDescriptionActivity));
             intent.PutExtra("topic", "Business");
             StartActivity(intent);
         }
 
-        private void ProgrammingLayout_Click(object sender, System.EventArgs e)
+        private void InitProgramming()
         {
             Intent intent = new Intent(this, typeof(QuizDescriptionActivity));
             intent.PutExtra("topic", "Programming");
             StartActivity(intent);
         }
 
-        private void EngineeringLayout_Click(object sender, System.EventArgs e)
+        private void InitEngineering()
         {
             Intent intent = new Intent(this, typeof(QuizDescriptionActivity));
             intent.PutExtra("topic", "Engineering");
             StartActivity(intent);
         }
 
-        private void SpaceLayout_Click(object sender, System.EventArgs e)
+        private void InitSpace()
         {
             Intent intent = new Intent(this, typeof(QuizDescriptionActivity));
             intent.PutExtra("topic", "Space");
             StartActivity(intent);
         }
 
-        private void GeographyLayout_Click(object sender, System.EventArgs e)
+        private void InitGeography()
         {
             Intent intent = new Intent(this, typeof(QuizDescriptionActivity));
             intent.PutExtra("topic", "Geography");
             StartActivity(intent);
         }
 
-        private void HistoryLayout_Click(object sender, System.EventArgs e)
+        private void InitHistory()
         {
             Intent intent = new Intent(this, typeof(QuizDescriptionActivity));
             intent.PutExtra("topic", "History");
             StartActivity(intent);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    drawerLayout.OpenDrawer((int)GravityFlags.Left);
+                    return true;
+                default:
+                    return base.OnOptionsItemSelected(item);
+            }  
         }
     }
 }

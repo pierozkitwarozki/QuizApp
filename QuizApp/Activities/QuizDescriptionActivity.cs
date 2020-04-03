@@ -41,6 +41,10 @@ namespace QuizApp
 
             //Get Topic Image
             quizImage.SetImageResource(GetImage(quizTopic));
+
+            //Fetching Topic Descripitons
+            QuizHelper quizHelper = new QuizHelper();
+            topicDescriptionTextView.Text = quizHelper.GetTopicDescription(quizTopic);
         }
 
         private int GetImage(string topic)

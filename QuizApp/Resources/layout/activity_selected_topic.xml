@@ -29,7 +29,7 @@
         android:textSize="15sp"
         android:gravity="center"
         android:layout_margin="20dp"
-        android:text="History is the past as it is described in written documents, and the study thereof. Events occurring before written records are considered prehistory."
+        android:text="Jebac ulane kurwy"
     />
 
     <RelativeLayout
